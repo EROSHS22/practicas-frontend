@@ -1,0 +1,139 @@
+# Git — Notas de aprendizaje
+
+## 1. Git (fundamentos)
+
+
+Conceptos clave:
+
+- **Commit**: una "fotografía" del estado del proyecto en un momento dado.
+- **Rama (branch)**: un puntero que se mueve automáticamente al hacer commits nuevos. Permite trabajar en paralelo sin afectar `main`.
+- **HEAD**: apunta a la rama (o commit) en la que estás parado actualmente.
+- **Merge**: une el historial de dos ramas, creando un commit de fusión si hace falta.
+- **Rebase**: reescribe el historial moviendo commits para que queden "encima" de otra rama, sin commit de fusión (historial más lineal, pero reescribe hashes).
+
+Comandos base usados en el ejercicio:
+
+```bash
+git init
+git add .
+git commit -m "mensaje"
+git branch -M main
+git remote add origin git@github.com:usuario/repo.git
+git push -u origin main
+git checkout nombre-rama
+git branch -d nombre-rama              # borrar rama local
+git push origin --delete nombre-rama   # borrar rama remota
+```
+
+## 2. GitHub Flow
+
+Modelo de trabajo simple basado en ramas cortas y despliegue continuo. Documentación oficial: https://docs.github.com/es/get-started/using-github/github-flow
+
+Pasos del flujo:
+
+1. Crear una rama a partir de `main` (siempre actualizado) para cada cambio.
+2. Hacer commits describiendo el progreso.
+3. Abrir un Pull Request cuando el trabajo está listo (o incluso antes, como borrador).
+4. Revisar y discutir el cambio en el PR.
+5. Mergear el PR a `main` una vez aprobado.
+6. Borrar la rama, ya que sus cambios quedaron integrados.
+
+Idea central: **`main` siempre debe estar en estado desplegable**. Todo cambio pasa por una rama y un PR, nunca se commitea directo a `main`.
+
+## 3. Conventional Commits
+
+Convención para escribir mensajes de commit de forma estandarizada. Especificación: https://www.conventionalcommits.org/es/v1.0.0/
+
+Formato:
+
+```
+<tipo>(<alcance opcional>): <descripción corta>
+```
+
+Tipos más usados:
+
+| Tipo       | Cuándo usarlo                                                        |
+|------------|-----------------------------------------------------------------------|
+| `feat`     | Nueva funcionalidad para el usuario                                   |
+| `fix`      | Corrección de un bug                                                  |
+| `chore`    | Tareas de mantenimiento, sin afectar funcionalidad ni corregir bugs   |
+| `style`    | Cambios de formato/estilo visual (espaciado, CSS) sin lógica nueva    |
+| `docs`     | Cambios solo en documentación                                         |
+| `refactor` | Cambio de código que no arregla un bug ni añade funcionalidad         |
+| `test`     | Añadir o corregir pruebas                                             |
+
+El tipo y el alcance entre paréntesis se mantienen en inglés por convención; la descripción puede ir en español.
+
+Ejemplos:
+
+```
+feat(footer): add footer component
+fix(button): oscurecer color del texto del botón enviar para mejorar contraste
+chore(button): verificar que el ratio de contraste cumple WCAG AA
+```
+
+## 4. El flujo completo: Issue → rama → commits → PR
+
+Ejercicio práctico realizado sobre `practicas-frontend`.
+
+### 4.1 Crear el Issue
+
+Describe un cambio pequeño y concreto. Buena estructura:
+
+- **Qué pasa** (problema o algo faltante)
+- **Dónde** (archivo/componente si se conoce)
+- **Solución propuesta**
+- **Checklist** opcional de sub-tareas
+
+### 4.2 Crear la rama desde el propio Issue
+
+En la sección **Development** del Issue → **Create a branch**. Esto:
+
+- Enlaza automáticamente la rama con el Issue.
+- Requiere elegir **Branch source** (debe ser `main`, o la rama por defecto del repo).
+- Sugiere un nombre de rama en formato slug (ej. `1-corregir-contraste-del-texto-en-el-boton-enviar`).
+
+Con "Checkout locally" seleccionado, GitHub muestra los comandos para bajarla:
+
+```bash
+git fetch origin
+git checkout nombre-de-la-rama
+```
+
+### 4.3 Hacer commits siguiendo Conventional Commits
+
+Commits pequeños y descriptivos, cada uno representando un paso lógico del cambio.
+
+### 4.4 Abrir el Pull Request
+
+- **Título**: legible, (ej. `Corrige el contraste del botón "Enviar"`, opcionalmente en formato `fix(button): ...`).
+- **Descripción**: qué se hizo y por qué.
+- **Enlazar el Issue** con la palabra clave:
+
+```
+Closes #<número>
+```
+
+(también funcionan `Fixes` y `Resolves`)
+
+### 4.5 Mergear y verificar
+
+- Al mergear el PR, `Closes #<número>` cierra automáticamente el Issue enlazado y deja un comentario con referencia al PR.
+- Si el PR se cierra **sin** mergear, el Issue no se cierra.
+- Tras el merge, borrar la rama (GitHub ofrece el botón "Delete branch" justo ahí) — ya cumplió su función.
+
+### 4.6 Resumen del ciclo
+
+```
+Issue (describe el problema)
+   ↓
+Rama creada desde main, enlazada al Issue
+   ↓
+Commits (conventional commits)
+   ↓
+Push de la rama
+   ↓
+Pull Request hacia main (con "Closes #N")
+   ↓
+Merge → Issue se cierra solo → borrar rama
+```
