@@ -1,0 +1,42 @@
+<form action="/enviar" method="POST" target="_blank">
+  
+  <div>
+    <label for="firstName">Name</label>
+    <input type="text" id="firstName" name="firstName" required>
+  </div>
+
+  <div>
+    <label for="lastName">Last</label>
+    <input type="text" id="lastName" name="lastName" required>
+  </div>
+
+  <div>
+    <label for="userAge">Age</label>
+    <input type="number" id="userAge" name="userAge" min="1" max="120" required>
+  </div>
+
+  <div>
+    <label for="userEmail">Email</label>
+    <input type="email" id="userEmail" name="userEmail" required>
+  </div>
+
+  <fieldset>
+    <legend>Agree to the terms? (Radio)</legend>
+    <div>
+      <input type="radio" id="termsYes" name="termsRadio" value="yes" required>
+      <label for="termsYes">Yes</label>
+    </div>
+    <div>
+      <input type="radio" id="termsNo" name="termsRadio" value="no">
+      <label for="termsNo">No</label>
+    </div>
+  </fieldset>
+
+  <div>
+    <input type="checkbox" id="termsCheckbox" name="termsCheckbox" required>
+    <label for="termsCheckbox">Agree to the terms? (Checkbox)</label>
+  </div>
+
+  <button type="submit">Submit Button</button>
+
+</form>
