@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 1 - Card de Producto</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+
+  <article class="w-full md:max-w-sm bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+    
+    <img 
+      src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=600&h=400" 
+      alt="Auriculares inalámbricos premium color negro" 
+      class="w-full h-56 object-cover"
+    />
+    
+    <div class="p-6">
+      <h3 class="text-xl font-bold text-gray-900 mb-2">
+        Sony WH-1000XM4
+      </h3>
+      
+      <p class="text-gray-600 text-sm mb-6">
+        Disfruta de la mejor cancelación de ruido del mercado. Diseño ergonómico, batería de 30 horas y calidad de sonido excepcional.
+      </p>
+      
+      <div class="flex items-center justify-between">
+        <span class="text-2xl font-black text-gray-900">
+          $299
+        </span>
+        
+        <button class="px-5 py-2.5 bg-blue-600 text-white font-semibold rounded-lg transition-all duration-200 hover:bg-red-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-300 active:scale-95">
+          Comprar
+        </button>
+      </div>
+    </div>
+
+  </article>
+
+</body>
+</html>
