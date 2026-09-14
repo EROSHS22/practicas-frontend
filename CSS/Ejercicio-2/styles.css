@@ -1,0 +1,52 @@
+:root {
+  --color-primario: #f18e63;
+  --color-secundario: #2de3e9;
+  --color-texto: #1f2937;
+  --color-fondo: #f3f4f6;
+
+  --text-h1: 2.5rem;
+  --text-h2: 1.75rem;
+  --text-h3: 1.25rem;
+  --text-btn: 1rem;
+
+  --transicion-rapida: 0.2s ease-in-out;
+  --transicion-suave: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  font-family: system-ui, sans-serif;
+  padding: 2rem;
+}
+
+h1 {
+  font-size: var(--text-h1);
+  color: var(--color-primario);
+}
+
+h2 {
+  font-size: var(--text-h2);
+}
+
+h3 {
+  font-size: var(--text-h3);
+  opacity: 0.8;
+}
+
+.btn-interactivo {
+  background-color: var(--color-primario);
+  color: white;
+  font-size: var(--text-btn);
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  
+  transition: var(--transicion-suave), background-color var(--transicion-rapida);
+}
+
+.btn-interactivo:hover {
+  transform: scale(1.1);
+  background-color: var(--color-secundario);
+}
