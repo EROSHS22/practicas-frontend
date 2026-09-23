@@ -1,0 +1,200 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: API Testing - Ejercicio 2
+meta:
+  id: wrk_52ae26fa9c09455991e3c963682c950f
+  created: 1790091971113
+  modified: 1790091971113
+  description: ""
+collection:
+  - url: "{{ _.BASE_URL.base_url }}/posts/1"
+    name: Posts/1
+    meta:
+      id: req_e55060e1ae384a6c9b89b5ebfa4f9d19
+      created: 1790092145376
+      modified: 1790093416021
+      isPrivate: false
+      description: ""
+      sortKey: -1790092740889
+    method: GET
+    body:
+      mimeType: application/json
+      text: |-
+        const response = await insomnia.send();
+        expect(response.status).to.equal(200);
+
+        const body = JSON.parse(response.data);
+        expect(body).to.have.property('id');
+        expect(body).to.have.property('title');
+        expect(body).to.have.property('body');
+        expect(body).to.have.property('userId');
+    headers:
+      - name: Content-Type
+        value: application/json
+    scripts:
+      afterResponse: |-
+        insomnia.test("Status code is 200", function () {
+            insomnia.response.to.have.status(200);
+        });
+
+        insomnia.test("Response time is less than 1000ms", function () {
+            insomnia.expect(insomnia.response.responseTime).to.be.below(1000);
+        });
+
+        insomnia.test("Tiene las propiedades requeridas", function () {
+            var jsonData = insomnia.response.json();
+            insomnia.expect(jsonData).to.have.property('id');
+            insomnia.expect(jsonData).to.have.property('title');
+            insomnia.expect(jsonData).to.have.property('body');
+            insomnia.expect(jsonData).to.have.property('userId');
+        });
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.BASE_URL.base_url }}/posts"
+    name: Posts
+    meta:
+      id: req_d3de3d618c7b4eb09f0f5a7503afdbdb
+      created: 1790092213447
+      modified: 1790093405605
+      isPrivate: false
+      description: ""
+      sortKey: -1790092740989
+    method: GET
+    body:
+      mimeType: application/json
+      text: |-
+        const response = await insomnia.send();
+
+        expect(response.status).to.equal(200);
+        expect(response.responseTime).to.be.below(1000);
+
+        const body = JSON.parse(response.data);
+        expect(body).to.be.an('array');
+    headers:
+      - name: Content-Type
+        value: application/json
+    scripts:
+      afterResponse: |-
+        insomnia.test("Status code is 200", function () {
+            insomnia.response.to.have.status(200);
+        });
+
+        insomnia.test("Response time is less than 1000ms", function () {
+            insomnia.expect(insomnia.response.responseTime).to.be.below(1000);
+        });
+
+        insomnia.test("La respuesta es un array", function () {
+            var jsonData = insomnia.response.json();
+            insomnia.expect(jsonData).to.be.an('array');
+        });
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.BASE_URL.base_url }}/posts/1/comments"
+    name: Posts/1/comments
+    meta:
+      id: req_ea3b8a7f327a4305b8ec146955ea9d96
+      created: 1790092628642
+      modified: 1790093430762
+      isPrivate: false
+      description: ""
+      sortKey: -1790092628642
+    method: GET
+    scripts:
+      afterResponse: >-
+        insomnia.test("Status code is 200", function () {
+            insomnia.response.to.have.status(200);
+        });
+
+
+        insomnia.test("Response time is less than 1000ms", function () {
+            insomnia.expect(insomnia.response.responseTime).to.be.below(1000);
+        });
+
+
+        insomnia.test("Cada comentario tiene las propiedades correctas",
+        function () {
+            var jsonData = insomnia.response.json();
+            insomnia.expect(jsonData[0]).to.have.property('id');
+            insomnia.expect(jsonData[0]).to.have.property('name');
+            insomnia.expect(jsonData[0]).to.have.property('email');
+            insomnia.expect(jsonData[0]).to.have.property('body');
+        });
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.BASE_URL.base_url }}/posts"
+    name: Posts
+    meta:
+      id: req_822e305c357f4ec0ad7e5157ed175053
+      created: 1790092740789
+      modified: 1790093378265
+      isPrivate: false
+      description: ""
+      sortKey: -1790092740789
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "title": "Mi nuevo post desde Insomnia",
+          "body": "Este es el contenido de mi post de prueba",
+          "userId": 1
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+    scripts:
+      afterResponse: |-
+        insomnia.test("Status code is 201", function () {
+            insomnia.response.to.have.status(201);
+        });
+
+        insomnia.test("Response time is less than 1000ms", function () {
+            insomnia.expect(insomnia.response.responseTime).to.be.below(1000);
+        });
+
+        insomnia.test("La respuesta contiene un ID generado", function () {
+            var jsonData = insomnia.response.json();
+            insomnia.expect(jsonData).to.have.property('id');
+        });
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_4b302bcf26482ea7cda5dc868c1241dc85bcde17
+    created: 1790091971117
+    modified: 1790093431933
+environments:
+  name: Base Environment
+  meta:
+    id: env_4b302bcf26482ea7cda5dc868c1241dc85bcde17
+    created: 1790091971115
+    modified: 1790093431934
+    isPrivate: false
+  data:
+    BASE_URL:
+      base_url: https://jsonplaceholder.typicode.com
